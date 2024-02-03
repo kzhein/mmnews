@@ -117,7 +117,7 @@ export const getRFA = async (page: number) => {
   const data = articleElements.map((ae) => ({
     title: ae.querySelector(".result-title a").textContent.trim(),
     date: ae.querySelector(".discreet .searchresultdate").textContent.trim(),
-    image: ae.querySelector(".teaserimg img").src,
+    image: ae.querySelector(".teaserimg img")?.src, // there could be some posts that don't have an image
     link: ae.querySelector(".result-title a").href,
   }));
 
