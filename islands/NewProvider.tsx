@@ -54,24 +54,27 @@ export function NewProvider({ name, logo, website, id, news }) {
           {name}
         </a>
       </div>
-      {myNews.map((neww) => (
-        <div class="d-flex align-items-center">
-          <img
-            src={neww.image || logo}
-            alt={neww.title}
-            style="object-fit: contain"
-            width="130"
-            height="100"
-            class="me-2"
-          />
-          <div>
-            <a href={neww.link} target="_blank">
-              <p>{neww.title}</p>
-            </a>
-            <p>{neww.date}</p>
+      <div className="row">
+        {myNews.map((neww) => (
+          <div class="col-12 col-md-6 d-flex align-items-center">
+            <img
+              src={neww.image || logo}
+              alt={neww.title}
+              style="object-fit: contain"
+              width="130"
+              height="100"
+              class="me-2"
+            />
+            <div>
+              <a href={neww.link} target="_blank">
+                <p>{neww.title}</p>
+              </a>
+              <p>{neww.date}</p>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
+
       <button
         type="button"
         class="btn btn-primary d-block mx-auto"
