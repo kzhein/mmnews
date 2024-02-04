@@ -2,7 +2,7 @@ import { useState } from "preact/hooks";
 
 export function NewProvider({ name, logo, website, id, news }) {
   const [myNews, setMyNews] = useState(news);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(news.length === 0 ? 0 : 1);
   const [isLoading, setIsLoading] = useState(false);
 
   const getMoreNews = async () => {

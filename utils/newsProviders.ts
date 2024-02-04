@@ -103,6 +103,30 @@ export const getAyeyarwaddyTimes = async (page: number) => {
   return data;
 };
 
+export const getBbc = async (page: number) => {
+  const html = await fetch(
+    `https://www.bbc.com/burmese/topics/c404v08p1wxt?page=${page}`,
+  ).then((res) => res.text());
+
+  const { document } = parseHTML(html);
+
+  const articleElements = [
+    ...document.querySelectorAll('ul[data-testid="topic-promos"] li'),
+  ];
+
+  const data = articleElements.map((ae) => ({
+    title: ae.querySelector(
+      '.promo-text h2 a span[data-testid="visually-hidden-text"]',
+    )?.nextSibling?.textContent?.trim() ||
+      ae.querySelector(".promo-text h2 a").textContent.trim(),
+    date: ae.querySelector(".promo-text time").textContent.trim(),
+    image: ae.querySelector(".promo-image img").src,
+    link: ae.querySelector(".promo-text h2 a").href,
+  }));
+
+  return data;
+};
+
 export const getRFA = async (page: number) => {
   const html = await fetch(
     `https://www.rfa.org/burmese/@@search?SearchableText=&sort_on=Date&b_start:int=${
@@ -129,5 +153,6 @@ export const getNewsMap = {
   "myanmarnow": getMyanmarNow,
   "khitthit": getKhitThit,
   "ayeyarwaddy": getAyeyarwaddyTimes,
+  "bbc": getBbc,
   "rfa": getRFA,
 };
