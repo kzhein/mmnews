@@ -8,6 +8,7 @@ import * as $api_news from "./routes/api/news.ts";
 import * as $greet_name_ from "./routes/greet/[name].tsx";
 import * as $index from "./routes/index.tsx";
 import * as $NewProvider from "./islands/NewProvider.tsx";
+import * as $News from "./islands/News.tsx";
 import { type Manifest } from "$fresh/server.ts";
 
 const manifest = {
@@ -20,6 +21,7 @@ const manifest = {
   },
   islands: {
     "./islands/NewProvider.tsx": $NewProvider,
+    "./islands/News.tsx": $News,
   },
   baseUrl: import.meta.url,
 } satisfies Manifest;

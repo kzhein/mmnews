@@ -41,17 +41,16 @@ export function NewProvider({ name, logo, website, id, news }) {
 
   return (
     <div class="mb-3">
-      <div class="d-flex align-items-center justify-content-center">
-        <img
-          src={logo}
-          alt={name}
-          style="object-fit: contain"
-          class="me-3"
-          width="100"
-          height="100"
-        />
+      <div class="d-flex align-items-center justify-content-center mb-3">
         <a href={website} target="_blank">
-          {name}
+          <img
+            src={logo}
+            alt={name}
+            style="object-fit: contain"
+            class="me-3"
+            width="100"
+            height="100"
+          />
         </a>
       </div>
       <div className="row">
@@ -77,7 +76,7 @@ export function NewProvider({ name, logo, website, id, news }) {
 
       <button
         type="button"
-        class="btn btn-primary d-block mx-auto"
+        class="btn btn-primary d-block mx-auto my-3"
         onClick={getMoreNews}
         disabled={isLoading}
       >
