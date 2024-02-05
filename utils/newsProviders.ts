@@ -20,7 +20,7 @@ export const getIrrawaddy = async (page: number) => {
       .textContent.trim()
       .replace(/\s+/g, " "),
     date: ae.querySelector(".jeg_post_meta .jeg_meta_date").textContent.trim(),
-    image: ae.querySelector(".jeg_thumb img").getAttribute("data-src"),
+    image: ae.querySelector(".jeg_thumb img")?.getAttribute("data-src"),
     link: ae.querySelector(".jeg_post_title a").href,
   }));
 
@@ -43,7 +43,7 @@ export const getMyanmarNow = async (page: number) => {
     date: ae
       .querySelector(".block-post-overlay .block-title-overlay .date")
       .textContent.trim(),
-    image: ae.querySelector(".block-post-overlay img").src,
+    image: ae.querySelector(".block-post-overlay img")?.src,
     link: ae.querySelector(
       ".block-post-overlay .block-title-overlay h2.post-title a",
     ).href,
@@ -74,7 +74,7 @@ export const getKhitThit = async (page: number) => {
       .textContent.trim(),
     image: ae
       .querySelector(".td-image-container .td-module-thumb a span")
-      .getAttribute("data-img-url"),
+      ?.getAttribute("data-img-url"),
     link: ae.querySelector(".td-module-meta-info .td-module-title a").href,
   }));
 
@@ -96,7 +96,7 @@ export const getAyeyarwaddyTimes = async (page: number) => {
     date: ae
       .querySelector(".read-details .post-item-metadata .posts-date")
       .textContent.trim(),
-    image: ae.querySelector(".read-img img").src,
+    image: ae.querySelector(".read-img img")?.src,
     link: ae.querySelector(".read-details .read-title a").href,
   }));
 
@@ -120,7 +120,7 @@ export const getBbc = async (page: number) => {
     )?.nextSibling?.textContent?.trim() ||
       ae.querySelector(".promo-text h2 a").textContent.trim(),
     date: ae.querySelector(".promo-text time").textContent.trim(),
-    image: ae.querySelector(".promo-image img").src,
+    image: ae.querySelector(".promo-image img")?.src,
     link: ae.querySelector(".promo-text h2 a").href,
   }));
 
@@ -141,7 +141,7 @@ export const getRFA = async (page: number) => {
   const data = articleElements.map((ae) => ({
     title: ae.querySelector(".result-title a").textContent.trim(),
     date: ae.querySelector(".discreet .searchresultdate").textContent.trim(),
-    image: ae.querySelector(".teaserimg img")?.src, // there could be some posts that don't have an image
+    image: ae.querySelector(".teaserimg img")?.src,
     link: ae.querySelector(".result-title a").href,
   }));
 
