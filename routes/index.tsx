@@ -1,36 +1,22 @@
 import { PageProps } from "$fresh/server.ts";
 import News from "../islands/News.tsx";
-import {
-  getAyeyarwaddyTimes,
-  getBbc,
-  getIrrawaddy,
-  getKhitThit,
-  getMizzima,
-  getMyanmarNow,
-  getRFA,
-} from "../utils/newsProviders.ts";
+import { newsProviders } from "../utils/newsProviders.ts";
 
 export const handler: Handlers<Project> = {
   async GET(_req, ctx) {
-    const news = await Promise.allSettled([
-      getIrrawaddy(1),
-      getMyanmarNow(1),
-      getKhitThit(1),
-      getAyeyarwaddyTimes(1),
-      getBbc(1),
-      getRFA(1),
-      getMizzima(1),
-    ]);
+    const newsProvidersIds = Object.keys(newsProviders);
 
-    const data = {
-      "irrawaddy": news[0].value || [],
-      "myanmarnow": news[1].value || [],
-      "khitthit": news[2].value || [],
-      "ayeyarwaddy": news[3].value || [],
-      "bbc": news[4].value || [],
-      "rfa": news[5].value || [],
-      "mizzima": news[6].value || [],
-    };
+    const newsResults = await Promise.allSettled(
+      newsProvidersIds.map((id) => newsProviders[id].getNews(1)),
+    );
+
+    const data = newsProvidersIds.map((id, index) => ({
+      id: id,
+      name: newsProviders[id].name,
+      logo: newsProviders[id].logo,
+      website: newsProviders[id].website,
+      news: newsResults[index].value || [],
+    }));
 
     return ctx.render(data);
   },
@@ -39,7 +25,7 @@ export const handler: Handlers<Project> = {
 export default function Home(props: PageProps) {
   return (
     <div class="container">
-      <News news={props.data} />
+      <News data={props.data} />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { FreshContext } from "$fresh/server.ts";
-import { getNewsMap } from "../../utils/newsProviders.ts";
+import { newsProviders } from "../../utils/newsProviders.ts";
 
 export const handler = async (req: Request, _ctx: FreshContext): Response => {
   try {
@@ -16,7 +16,7 @@ export const handler = async (req: Request, _ctx: FreshContext): Response => {
       );
     }
 
-    const getNews = getNewsMap[provider];
+    const getNews = newsProviders[provider]?.getNews;
 
     if (!getNews) {
       return Response.json(
