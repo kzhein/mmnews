@@ -5,6 +5,7 @@ import {
   getBbc,
   getIrrawaddy,
   getKhitThit,
+  getMizzima,
   getMyanmarNow,
   getRFA,
 } from "../utils/newsProviders.ts";
@@ -18,6 +19,7 @@ export const handler: Handlers<Project> = {
       getAyeyarwaddyTimes(1),
       getBbc(1),
       getRFA(1),
+      getMizzima(1),
     ]);
 
     const data = {
@@ -27,6 +29,7 @@ export const handler: Handlers<Project> = {
       "ayeyarwaddy": news[3].value || [],
       "bbc": news[4].value || [],
       "rfa": news[5].value || [],
+      "mizzima": news[6].value || [],
     };
 
     return ctx.render(data);

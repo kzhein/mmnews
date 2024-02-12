@@ -148,6 +148,26 @@ export const getRFA = async (page: number) => {
   return data;
 };
 
+export const getMizzima = async (page: number) => {
+  const html = await fetch(
+    `https://bur.mizzima.com/page/${page}?s`,
+  ).then((res) => res.text());
+
+  const { document } = parseHTML(html);
+
+  const articleElements = [...document.querySelectorAll("#content article")];
+
+  const data = articleElements.map((ae) => ({
+    title: ae.querySelector(".mag-post-title").textContent.trim(),
+    date: ae.querySelector(".mag-post-meta .post-date .entry-date").textContent
+      .trim(),
+    image: ae.querySelector(".mag-post-img .post-thumbnail img")?.dataset?.src,
+    link: ae.querySelector(".mag-post-title a").href,
+  }));
+
+  return data;
+};
+
 export const getNewsMap = {
   "irrawaddy": getIrrawaddy,
   "myanmarnow": getMyanmarNow,
@@ -155,4 +175,5 @@ export const getNewsMap = {
   "ayeyarwaddy": getAyeyarwaddyTimes,
   "bbc": getBbc,
   "rfa": getRFA,
+  "mizzima": getMizzima,
 };

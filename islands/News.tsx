@@ -56,6 +56,14 @@ export default function News({ news }) {
             RFA
           </button>
         </li>
+        <li class="nav-item">
+          <button
+            class={`nav-link ${current === "mizzima" ? "active" : ""}`}
+            onClick={() => setCurrent("mizzima")}
+          >
+            Mizzima
+          </button>
+        </li>
       </ul>
 
       <div class={current === "irrawaddy" ? "d-block" : "d-none"}>
@@ -115,6 +123,16 @@ export default function News({ news }) {
           website="https://www.rfa.org/burmese"
           id="rfa"
           news={news.rfa}
+        />
+      </div>
+
+      <div class={current === "mizzima" ? "d-block" : "d-none"}>
+        <NewProvider
+          name="Mizzima"
+          logo="https://bur.mizzima.com/wp-content/uploads/2023/10/mizzima-bur_logo_2023.png"
+          website="https://bur.mizzima.com/"
+          id="mizzima"
+          news={news.mizzima}
         />
       </div>
     </>
