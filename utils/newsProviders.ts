@@ -168,52 +168,82 @@ export const getMizzima = async (page: number) => {
   return data;
 };
 
+export const getDelta = async (page: number) => {
+  const html = await fetch(
+    `https://deltanewsagency.com/%E1%80%9E%E1%80%90%E1%80%84%E1%80%BA%E1%80%B8/page/${page}`,
+  ).then((res) => res.text());
+
+  const { document } = parseHTML(html);
+
+  const articleElements = [
+    ...document.querySelectorAll("#main-content article"),
+  ];
+
+  const data = articleElements.map((ae) => ({
+    title: ae.querySelector(".mh-posts-list-header .mh-posts-list-title")
+      .textContent.trim(),
+    date: ae.querySelector(".mh-posts-list-header .mh-meta a").textContent
+      .trim(),
+    image: ae.querySelector(".mh-posts-list-thumb img")?.src,
+    link: ae.querySelector(".mh-posts-list-header .mh-posts-list-title a").href,
+  }));
+
+  return data;
+};
+
 export const newsProviders = {
-  "irrawaddy": {
+  irrawaddy: {
     getNews: getIrrawaddy,
     name: "The Irrawaddy",
     logo:
       "https://burma.irrawaddy.com/wp-content/uploads/2023/03/Burmese-Favicon.svg",
     website: "https://burma.irrawaddy.com",
   },
-  "myanmarnow": {
+  myanmarnow: {
     getNews: getMyanmarNow,
     name: "Myanmar Now",
     logo:
       "https://i0.wp.com/myanmar-now.org/mm/wp-content/uploads/sites/7/2023/03/cropped-MN-Icon-300x300-1.png?fit=300%2C300&ssl=1",
     website: "https://myanmar-now.org/mm",
   },
-  "khitthit": {
+  khitthit: {
     getNews: getKhitThit,
     name: "Khit Thit",
     logo: "https://yktnews.com/wp-content/uploads/2022/01/KT_272x90.png",
     website: "https://yktnews.com",
   },
-  "ayeyarwaddy": {
+  ayeyarwaddy: {
     getNews: getAyeyarwaddyTimes,
     name: "Ayeyarwaddy Times",
     logo:
       "https://ayartimes.com/wp-content/uploads/2022/06/cropped-Untitled-design-e1655822095288-192x192.png",
     website: "https://ayartimes.com",
   },
-  "bbc": {
+  bbc: {
     getNews: getBbc,
     name: "BBC",
     logo:
       "https://ichef.bbci.co.uk/ace/standard/170/cpsprodpb/295f/live/65e815d0-1a62-11ee-87d1-5feb7aae5bea.png",
     website: "https://www.bbc.com/burmese",
   },
-  "rfa": {
+  rfa: {
     getNews: getRFA,
     name: "RFA",
     logo: "https://www.rfa.org/++theme++burmese/rfalogo.png",
     website: "https://www.rfa.org/burmese",
   },
-  "mizzima": {
+  mizzima: {
     getNews: getMizzima,
     name: "Mizzima",
     logo:
       "https://bur.mizzima.com/wp-content/uploads/2023/10/mizzima-bur_logo_2023.png",
-    website: "https://bur.mizzima.com/",
+    website: "https://bur.mizzima.com",
+  },
+  delta: {
+    getNews: getDelta,
+    name: "Delta News Agency",
+    logo:
+      "https://deltanewsagency.com/wp-content/uploads/2023/12/cropped-logo3-2.png",
+    website: "https://deltanewsagency.com",
   },
 };
