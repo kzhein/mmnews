@@ -1,6 +1,6 @@
 import { parseHTML } from "npm:linkedom@0.16.8/worker";
 
-export const getIrrawaddy = async (page: number): Promise<NewsResult[]> => {
+export const getIrrawaddy = async (page: number): Promise<Article[]> => {
   const json = await fetch("https://burma.irrawaddy.com/?ajax-request=jnews", {
     method: "POST",
     headers: {
@@ -30,7 +30,7 @@ export const getIrrawaddy = async (page: number): Promise<NewsResult[]> => {
   return data;
 };
 
-export const getMyanmarNow = async (page: number): Promise<NewsResult[]> => {
+export const getMyanmarNow = async (page: number): Promise<Article[]> => {
   const html = await fetch(`https://myanmar-now.org/mm/page/${page}/?s`).then(
     (res) => res.text(),
   );
@@ -55,7 +55,7 @@ export const getMyanmarNow = async (page: number): Promise<NewsResult[]> => {
   return data;
 };
 
-export const getKhitThit = async (page: number): Promise<NewsResult[]> => {
+export const getKhitThit = async (page: number): Promise<Article[]> => {
   const html = await fetch(`https://yktnews.com/page/${page}/?s`).then((res) =>
     res.text()
   );
@@ -86,7 +86,7 @@ export const getKhitThit = async (page: number): Promise<NewsResult[]> => {
 
 export const getAyeyarwaddyTimes = async (
   page: number,
-): Promise<NewsResult[]> => {
+): Promise<Article[]> => {
   const html = await fetch(`https://ayartimes.com/?paged=${page}&s`).then(
     (res) => res.text(),
   );
@@ -108,7 +108,7 @@ export const getAyeyarwaddyTimes = async (
   return data;
 };
 
-export const getBbc = async (page: number): Promise<NewsResult[]> => {
+export const getBbc = async (page: number): Promise<Article[]> => {
   const html = await fetch(
     `https://www.bbc.com/burmese/topics/c404v08p1wxt?page=${page}`,
   ).then((res) => res.text());
@@ -132,7 +132,7 @@ export const getBbc = async (page: number): Promise<NewsResult[]> => {
   return data;
 };
 
-export const getRFA = async (page: number): Promise<NewsResult[]> => {
+export const getRFA = async (page: number): Promise<Article[]> => {
   const html = await fetch(
     `https://www.rfa.org/burmese/@@search?SearchableText=&sort_on=Date&b_start:int=${
       (page - 1) * 30
@@ -153,7 +153,7 @@ export const getRFA = async (page: number): Promise<NewsResult[]> => {
   return data;
 };
 
-export const getMizzima = async (page: number): Promise<NewsResult[]> => {
+export const getMizzima = async (page: number): Promise<Article[]> => {
   const html = await fetch(
     `https://bur.mizzima.com/page/${page}?s`,
   ).then((res) => res.text());
@@ -173,7 +173,7 @@ export const getMizzima = async (page: number): Promise<NewsResult[]> => {
   return data;
 };
 
-export const getDelta = async (page: number): Promise<NewsResult[]> => {
+export const getDelta = async (page: number): Promise<Article[]> => {
   const html = await fetch(
     `https://deltanewsagency.com/%E1%80%9E%E1%80%90%E1%80%84%E1%80%BA%E1%80%B8/page/${page}`,
   ).then((res) => res.text());
@@ -196,15 +196,15 @@ export const getDelta = async (page: number): Promise<NewsResult[]> => {
   return data;
 };
 
-export interface NewsResult {
+export interface Article {
   title: string;
   date: string;
-  image: string;
+  image?: string;
   link: string;
 }
 
 export interface NewsProvider {
-  getNews: (page: number) => Promise<NewsResult[]>;
+  getNews: (page: number) => Promise<Article[]>;
   name: string;
   logo: string;
   website: string;

@@ -1,12 +1,12 @@
 import { useState } from "preact/hooks";
-import { NewsResult } from "../utils/newsProviders.ts";
+import { Article } from "../utils/newsProviders.ts";
 
 interface NewsProviderProps {
   name: string;
   logo: string;
   website: string;
   id: string;
-  news: NewsResult[];
+  news: Article[];
 }
 
 export function NewProvider(
@@ -29,7 +29,7 @@ export function NewProvider(
       return alert("Something went wrong while fetching more news! 💥");
     }
 
-    const moreNews: NewsResult[] = await res.json();
+    const moreNews: Article[] = await res.json();
 
     const myNewsMap = new Map();
 
@@ -40,7 +40,7 @@ export function NewProvider(
       myNewsMap.set(mn.link, mn);
     });
 
-    const newsWithoutDuplicates: NewsResult[] = [];
+    const newsWithoutDuplicates: Article[] = [];
 
     myNewsMap.forEach((neww) => {
       newsWithoutDuplicates.push(neww);
