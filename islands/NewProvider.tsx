@@ -1,6 +1,17 @@
 import { useState } from "preact/hooks";
+import { NewsResult } from "../utils/newsProviders.ts";
 
-export function NewProvider({ name, logo, website, id, news }) {
+interface NewsProviderProps {
+  name: string;
+  logo: string;
+  website: string;
+  id: string;
+  news: NewsResult[];
+}
+
+export function NewProvider(
+  { name, logo, website, id, news }: NewsProviderProps,
+) {
   const [myNews, setMyNews] = useState(news);
   const [currentPage, setCurrentPage] = useState(news.length === 0 ? 0 : 1);
   const [isLoading, setIsLoading] = useState(false);
@@ -18,7 +29,7 @@ export function NewProvider({ name, logo, website, id, news }) {
       return alert("Something went wrong while fetching more news! 💥");
     }
 
-    const moreNews = await res.json();
+    const moreNews: NewsResult[] = await res.json();
 
     const myNewsMap = new Map();
 
@@ -29,7 +40,7 @@ export function NewProvider({ name, logo, website, id, news }) {
       myNewsMap.set(mn.link, mn);
     });
 
-    const newsWithoutDuplicates = [];
+    const newsWithoutDuplicates: NewsResult[] = [];
 
     myNewsMap.forEach((neww) => {
       newsWithoutDuplicates.push(neww);

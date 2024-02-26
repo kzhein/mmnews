@@ -1,7 +1,12 @@
 import { useState } from "preact/hooks";
 import { NewProvider } from "./NewProvider.tsx";
+import { NewsProvider, NewsResult } from "../utils/newsProviders.ts";
 
-export default function News({ data }) {
+interface NewsProps {
+  data: ({ id: string; news: NewsResult[] } & Omit<NewsProvider, "getNews">)[];
+}
+
+export default function News({ data }: NewsProps) {
   const [current, setCurrent] = useState(data[0].id);
 
   return (

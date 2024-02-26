@@ -1,7 +1,10 @@
 import { FreshContext } from "$fresh/server.ts";
 import { newsProviders } from "../../utils/newsProviders.ts";
 
-export const handler = async (req: Request, _ctx: FreshContext): Response => {
+export const handler = async (
+  req: Request,
+  _ctx: FreshContext,
+): Promise<Response> => {
   try {
     const searchParams = new URL(req.url).searchParams;
     const provider = searchParams.get("provider");

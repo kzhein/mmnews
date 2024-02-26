@@ -1,8 +1,14 @@
-import { PageProps } from "$fresh/server.ts";
+import { Handlers, PageProps } from "$fresh/server.ts";
 import News from "../islands/News.tsx";
-import { newsProviders } from "../utils/newsProviders.ts";
+import {
+  NewsProvider,
+  newsProviders,
+  NewsResult,
+} from "../utils/newsProviders.ts";
 
-export const handler: Handlers<Project> = {
+export const handler: Handlers<
+  ({ id: string; news: NewsResult[] } & Omit<NewsProvider, "getNews">)[]
+> = {
   async GET(_req, ctx) {
     const newsProvidersIds = Object.keys(newsProviders);
 
@@ -15,7 +21,9 @@ export const handler: Handlers<Project> = {
       name: newsProviders[id].name,
       logo: newsProviders[id].logo,
       website: newsProviders[id].website,
-      news: newsResults[index].value || [],
+      news:
+        (newsResults[index] as PromiseFulfilledResult<NewsResult[]>).value ||
+        [],
     }));
 
     return ctx.render(data);

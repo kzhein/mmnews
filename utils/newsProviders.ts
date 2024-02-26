@@ -1,6 +1,6 @@
 import { parseHTML } from "npm:linkedom@0.16.8/worker";
 
-export const getIrrawaddy = async (page: number) => {
+export const getIrrawaddy = async (page: number): Promise<NewsResult[]> => {
   const json = await fetch("https://burma.irrawaddy.com/?ajax-request=jnews", {
     method: "POST",
     headers: {
@@ -19,15 +19,18 @@ export const getIrrawaddy = async (page: number) => {
       .querySelector(".jeg_post_title")
       .textContent.trim()
       .replace(/\s+/g, " "),
-    date: ae.querySelector(".jeg_post_meta .jeg_meta_date").textContent.trim(),
-    image: ae.querySelector(".jeg_thumb img")?.getAttribute("data-src"),
+    date: ae.querySelector(".jeg_post_meta .jeg_meta_date").textContent
+      .trim(),
+    image: ae.querySelector(".jeg_thumb img")?.getAttribute(
+      "data-src",
+    ),
     link: ae.querySelector(".jeg_post_title a").href,
   }));
 
   return data;
 };
 
-export const getMyanmarNow = async (page: number) => {
+export const getMyanmarNow = async (page: number): Promise<NewsResult[]> => {
   const html = await fetch(`https://myanmar-now.org/mm/page/${page}/?s`).then(
     (res) => res.text(),
   );
@@ -52,7 +55,7 @@ export const getMyanmarNow = async (page: number) => {
   return data;
 };
 
-export const getKhitThit = async (page: number) => {
+export const getKhitThit = async (page: number): Promise<NewsResult[]> => {
   const html = await fetch(`https://yktnews.com/page/${page}/?s`).then((res) =>
     res.text()
   );
@@ -81,7 +84,9 @@ export const getKhitThit = async (page: number) => {
   return data;
 };
 
-export const getAyeyarwaddyTimes = async (page: number) => {
+export const getAyeyarwaddyTimes = async (
+  page: number,
+): Promise<NewsResult[]> => {
   const html = await fetch(`https://ayartimes.com/?paged=${page}&s`).then(
     (res) => res.text(),
   );
@@ -103,7 +108,7 @@ export const getAyeyarwaddyTimes = async (page: number) => {
   return data;
 };
 
-export const getBbc = async (page: number) => {
+export const getBbc = async (page: number): Promise<NewsResult[]> => {
   const html = await fetch(
     `https://www.bbc.com/burmese/topics/c404v08p1wxt?page=${page}`,
   ).then((res) => res.text());
@@ -127,7 +132,7 @@ export const getBbc = async (page: number) => {
   return data;
 };
 
-export const getRFA = async (page: number) => {
+export const getRFA = async (page: number): Promise<NewsResult[]> => {
   const html = await fetch(
     `https://www.rfa.org/burmese/@@search?SearchableText=&sort_on=Date&b_start:int=${
       (page - 1) * 30
@@ -148,7 +153,7 @@ export const getRFA = async (page: number) => {
   return data;
 };
 
-export const getMizzima = async (page: number) => {
+export const getMizzima = async (page: number): Promise<NewsResult[]> => {
   const html = await fetch(
     `https://bur.mizzima.com/page/${page}?s`,
   ).then((res) => res.text());
@@ -168,7 +173,7 @@ export const getMizzima = async (page: number) => {
   return data;
 };
 
-export const getDelta = async (page: number) => {
+export const getDelta = async (page: number): Promise<NewsResult[]> => {
   const html = await fetch(
     `https://deltanewsagency.com/%E1%80%9E%E1%80%90%E1%80%84%E1%80%BA%E1%80%B8/page/${page}`,
   ).then((res) => res.text());
@@ -191,7 +196,21 @@ export const getDelta = async (page: number) => {
   return data;
 };
 
-export const newsProviders = {
+export interface NewsResult {
+  title: string;
+  date: string;
+  image: string;
+  link: string;
+}
+
+export interface NewsProvider {
+  getNews: (page: number) => Promise<NewsResult[]>;
+  name: string;
+  logo: string;
+  website: string;
+}
+
+export const newsProviders: Record<string, NewsProvider> = {
   irrawaddy: {
     getNews: getIrrawaddy,
     name: "The Irrawaddy",
