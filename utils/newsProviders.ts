@@ -5,6 +5,7 @@ export const getIrrawaddy = async (page: number): Promise<Article[]> => {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
+      "Referer": "https://burma.irrawaddy.com/?s=",
     },
     body:
       `data[filter]=0&data[current_page]=${page}&action=jnews_module_ajax_jnews_block_39`,
