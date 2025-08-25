@@ -74,6 +74,9 @@ export function NewProvider(
               width="130"
               height="100"
               class="me-2"
+              onError={(e) => {
+                e.target.src = logo;
+              }}
             />
             <div>
               <a href={neww.link} target="_blank">

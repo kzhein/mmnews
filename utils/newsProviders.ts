@@ -167,7 +167,7 @@ export const getMizzima = async (page: number): Promise<Article[]> => {
     title: ae.querySelector(".mag-post-title").textContent.trim(),
     date: ae.querySelector(".mag-post-meta .post-date .entry-date").textContent
       .trim(),
-    image: ae.querySelector(".mag-post-img .post-thumbnail img")?.dataset?.src,
+    image: ae.querySelector(".mag-post-img .post-thumbnail img")?.src,
     link: ae.querySelector(".mag-post-title a").href,
   }));
 
@@ -256,7 +256,7 @@ export const newsProviders: Record<string, NewsProvider> = {
     getNews: getMizzima,
     name: "Mizzima",
     logo:
-      "https://bur.mizzima.com/wp-content/uploads/2023/10/mizzima-bur_logo_2023.png",
+      "https://www.bnionline.net/sites/bnionline.net/files/ethnic-media-logo/mizzima-bur_logo_2023.png",
     website: "https://bur.mizzima.com",
   },
   delta: {
