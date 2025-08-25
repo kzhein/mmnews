@@ -133,26 +133,26 @@ export const getBbc = async (page: number): Promise<Article[]> => {
   return data;
 };
 
-export const getRFA = async (page: number): Promise<Article[]> => {
-  const html = await fetch(
-    `https://www.rfa.org/burmese/@@search?SearchableText=&sort_on=Date&b_start:int=${
-      (page - 1) * 30
-    }`,
-  ).then((res) => res.text());
+// export const getRFA = async (page: number): Promise<Article[]> => {
+//   const html = await fetch(
+//     `https://www.rfa.org/burmese/@@search?SearchableText=&sort_on=Date&b_start:int=${
+//       (page - 1) * 30
+//     }`,
+//   ).then((res) => res.text());
 
-  const { document } = parseHTML(html);
+//   const { document } = parseHTML(html);
 
-  const articleElements = [...document.querySelectorAll(".searchresult")];
+//   const articleElements = [...document.querySelectorAll(".searchresult")];
 
-  const data = articleElements.map((ae) => ({
-    title: ae.querySelector(".result-title a").textContent.trim(),
-    date: ae.querySelector(".discreet .searchresultdate").textContent.trim(),
-    image: ae.querySelector(".teaserimg img")?.src,
-    link: ae.querySelector(".result-title a").href,
-  }));
+//   const data = articleElements.map((ae) => ({
+//     title: ae.querySelector(".result-title a").textContent.trim(),
+//     date: ae.querySelector(".discreet .searchresultdate").textContent.trim(),
+//     image: ae.querySelector(".teaserimg img")?.src,
+//     link: ae.querySelector(".result-title a").href,
+//   }));
 
-  return data;
-};
+//   return data;
+// };
 
 export const getMizzima = async (page: number): Promise<Article[]> => {
   const html = await fetch(
@@ -246,12 +246,12 @@ export const newsProviders: Record<string, NewsProvider> = {
       "https://ichef.bbci.co.uk/ace/standard/170/cpsprodpb/295f/live/65e815d0-1a62-11ee-87d1-5feb7aae5bea.png",
     website: "https://www.bbc.com/burmese",
   },
-  rfa: {
-    getNews: getRFA,
-    name: "RFA",
-    logo: "https://www.rfa.org/++theme++burmese/rfalogo.png",
-    website: "https://www.rfa.org/burmese",
-  },
+  // rfa: {
+  //   getNews: getRFA,
+  //   name: "RFA",
+  //   logo: "https://www.rfa.org/++theme++burmese/rfalogo.png",
+  //   website: "https://www.rfa.org/burmese",
+  // },
   mizzima: {
     getNews: getMizzima,
     name: "Mizzima",
